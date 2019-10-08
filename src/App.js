@@ -1,26 +1,259 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { Table, Button, Checkbox } from 'antd'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import carsData from './cars.json'
+import './App.css'
+
+class App extends React.Component {
+  state = {
+    filteredInfo: null,
+    sortedInfo: null,
+  }
+
+  // handleChange = (pagination, filters, sorter) => {
+  //   console.log('Various parameters', pagination, filters, sorter)
+  //   this.setState({
+  //     filteredInfo: filters,
+  //     sortedInfo: sorter,
+  //   })
+  // }
+
+  // clearFilters = () => {
+  //   this.setState({ filteredInfo: null })
+  // }
+
+  // clearAll = () => {
+  //   this.setState({
+  //     filteredInfo: null,
+  //     sortedInfo: null,
+  //   })
+  // }
+
+  setPriceSort = () => {
+    this.setState({
+      sortedInfo: {
+        order: 'descend',
+        columnKey: 'price',
+      },
+    })
+  }
+
+  render() {
+    // let { sortedInfo, filteredInfo } = this.state
+    // sortedInfo = sortedInfo || {}
+    // filteredInfo = filteredInfo || {}
+    const columns = [
+      {
+        title: 'id',
+        dataIndex: 'carInfoId',
+        key: 'carInfoId',
+        sorter: (a, b) => a.carInfoId - b.carInfoId,
+      },
+      {
+        title: '标题',
+        dataIndex: 'title',
+        key: 'title',
+      },
+      // {
+      //   title: 'carOfficial',
+      //   dataIndex: 'carOfficial',
+      //   key: 'carOfficial',
+      //   render(carOfficial) {
+      //     return <span>{carOfficial.toString()}</span>
+      //   }
+      // },
+      {
+        title: 'link',
+        dataIndex: 'link',
+        key: 'link',
+        render(link) {
+          return <a href={link}>link</a>
+        },
+      },
+      {
+        title: '价格',
+        dataIndex: 'price',
+        key: 'price',
+        sorter: (a, b) => a.price - b.price,
+        render(price) {
+          return <span>{price / 10000}w</span>
+        },
+      },
+      {
+        title: '新车价格',
+        dataIndex: 'priceNewCar',
+        key: 'priceNewCar',
+        sorter: (a, b) => a.priceNewCar - b.priceNewCar,
+        render(priceNewCar) {
+          return <span>{priceNewCar / 10000}w</span>
+        },
+      },
+      {
+        title: '图片',
+        dataIndex: 'img',
+        key: 'img',
+        render(img) {
+          return (
+            <img
+              style={{
+                cursor: 'pointer',
+                width: '120px',
+              }}
+              src={img}
+              alt=''
+              onClick={() => {}}
+            />
+          )
+        },
+      },
+      {
+        title: '是否售出',
+        dataIndex: 'soldOut',
+        key: 'soldOut',
+        render(soldOut) {
+          return <span>{soldOut.toString()}</span>
+        },
+        filters: [
+          {
+            text: '已售出',
+            value: 'true',
+          },
+          {
+            text: '未售出',
+            value: 'false',
+          },
+        ],
+        onFilter: (value, record) => record.soldOut.toString().includes(value),
+        // filteredValue: filteredInfo.name || null,
+      },
+      // {
+      //   title: 'birth',
+      //   dataIndex: 'birth',
+      //   key: 'birth',
+      // },
+      {
+        title: '里程数',
+        dataIndex: 'distance',
+        key: 'distance',
+        sorter: (a, b) => a.distance - b.distance,
+        render(distance) {
+          return <span>{(distance / 10000).toFixed(2)}万公里</span>
+        },
+      },
+      {
+        title: '月供',
+        dataIndex: 'loanMoney',
+        key: 'loanMoney',
+        sorter: (a, b) => a.loanMoney - b.loanMoney,
+      },
+      {
+        title: 'scanDate',
+        dataIndex: 'scanDate',
+        key: 'scanDate',
+        sorter: (a, b) => {
+          return Date.parse(a.scanDate) - Date.parse(b.scanDate)
+        },
+      },
+      {
+        title: '几几年款',
+        dataIndex: 'yearVersion',
+        key: 'yearVersion',
+        sorter: (a, b) => parseInt(a.yearVersion, 10) - parseInt(b.yearVersion, 10),
+      },
+      {
+        title: '热度',
+        dataIndex: 'viewHeat',
+        key: 'viewHeat',
+        sorter: (a, b) => a.viewHeat - b.viewHeat,
+      },
+
+      {
+        title: '地区',
+        dataIndex: 'location',
+        key: 'location',
+      },
+      {
+        title: '销售厂商',
+        dataIndex: 'agencyBrand',
+        key: 'agencyBrand',
+      },
+      // {
+      //   title: '销售',
+      //   dataIndex: 'agencyName',
+      //   key: 'agencyName',
+      // },
+      // {
+      //   title: 'agencyTelArr',
+      //   dataIndex: 'agencyTelArr',
+      //   key: 'agencyTelArr',
+      // },
+      {
+        title: '排放标准',
+        dataIndex: 'emissionStandards',
+        key: 'emissionStandards',
+        sorter: (a, b) => a.emissionStandards - b.emissionStandards,
+      },
+      {
+        title: 'color',
+        dataIndex: 'color',
+        key: 'color',
+      },
+      {
+        title: 'engine',
+        dataIndex: 'engine',
+        key: 'engine',
+        sorter: (a, b) => a.engine - b.engine,
+      },
+      {
+        title: '气缸数',
+        dataIndex: 'cylindersNum',
+        key: 'cylindersNum',
+        sorter: (a, b) => a.cylindersNum - b.cylindersNum,
+      },
+      {
+        title: '排量',
+        dataIndex: 'displacement',
+        key: 'displacement',
+        render(displacement) {
+          return <span>{(displacement / 1000).toFixed(1)}L</span>
+        },
+      },
+      {
+        title: '出厂时间',
+        dataIndex: 'factoryTime',
+        key: 'factoryTime',
+        sorter: (a, b) => {
+          return Date.parse(a.factoryTime) - Date.parse(b.factoryTime)
+        },
+      },
+      {
+        title: '上牌时间',
+        dataIndex: 'cardTime',
+        key: 'cardTime',
+        sorter: (a, b) => {
+          return Date.parse(a.cardTime) - Date.parse(b.cardTime)
+        },
+      },
+    ]
+    return (
+      <div>
+        <div className='table-operations'>
+          <Checkbox onChange={this.filterSoldOut}>仅显示在售</Checkbox>
+          <Button onClick={this.setPriceSort}>价格排序</Button>
+          <Button onClick={this.clearFilters}>Clear filters</Button>
+          <Button onClick={this.clearAll}>Clear filters and sorters</Button>
+        </div>
+        <Table
+          columns={columns}
+          dataSource={carsData}
+          size='small'
+          bordered
+          pagination={false}
+          // scroll={{ y: 650 }}
+        />
+      </div>
+    )
+  }
 }
 
-export default App;
+export default App
