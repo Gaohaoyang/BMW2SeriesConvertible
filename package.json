@@ -6,13 +6,19 @@
     "antd": "^3.23.5",
     "react": "^16.10.1",
     "react-dom": "^16.10.1",
-    "react-scripts": "3.1.2"
+    "react-scripts": "3.1.2",
+    "cheerio": "^1.0.0-rc.3",
+    "colors": "^1.4.0",
+    "mkdirp": "^0.5.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "r": "node --experimental-modules ./node/index",
+    "dc": "node --experimental-modules ./node/dataCorrection",
+    "pub": "yarn r && yarn dc && yarn build && git add -A && git commit -m\"publish\" && git push"
   },
   "eslintConfig": {
     "extends": "react-app"

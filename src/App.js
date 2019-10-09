@@ -50,13 +50,13 @@ class App extends React.Component {
     if (e.target.checked) {
       this.setState({
         filteredInfo: {
-          soldOut: ['true'],
+          soldOut: ['false'],
         },
       })
     } else {
       this.setState({
         filteredInfo: {
-          soldOut: ['false'],
+          soldOut: ['true'],
         },
       })
     }
@@ -282,7 +282,7 @@ class App extends React.Component {
         <div className='table-operations'>
           <Checkbox
             onChange={this.filterSoldOutCheckBox}
-            checked={this.state.filteredInfo && this.state.filteredInfo.soldOut[0] === 'false'}
+            checked={this.state.filteredInfo && this.state.filteredInfo.soldOut && this.state.filteredInfo.soldOut[0] === 'false'}
           >仅显示在售</Checkbox>
           {/* <Button onClick={this.setPriceSort}>价格排序</Button> */}
           <Button onClick={this.clearFilters}>Clear filters</Button>
