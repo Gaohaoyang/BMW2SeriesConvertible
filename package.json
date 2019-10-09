@@ -20,8 +20,7 @@
     "eject": "react-scripts eject",
     "r": "node --experimental-modules ./node/index",
     "dc": "node --experimental-modules ./node/dataCorrection",
-    "pub": "yarn r && yarn dc && yarn build && git add -A && git commit -m\"publish\" && git push",
-    "pub github": "yarn r && yarn dc && yarn build && git add -A && git commit -m\"publish\" && git push -u github master"
+    "pub": "yarn r && yarn dc && git add -A && git commit -m\"update data\" && git push && yarn run deploy"
   },
   "homepage": "https://gaohaoyang.github.io/BMW2SeriesConvertible",
   "eslintConfig": {
