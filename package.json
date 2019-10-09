@@ -13,12 +13,13 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && mv build docs",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "r": "node --experimental-modules ./node/index",
     "dc": "node --experimental-modules ./node/dataCorrection",
-    "pub": "yarn r && yarn dc && yarn build && git add -A && git commit -m\"publish\" && git push"
+    "pub": "yarn r && yarn dc && yarn build && git add -A && git commit -m\"publish\" && git push",
+    "pub github": "yarn r && yarn dc && yarn build && git add -A && git commit -m\"publish\" && git push -u github master"
   },
   "eslintConfig": {
     "extends": "react-app"
