@@ -4,16 +4,18 @@
   "private": true,
   "dependencies": {
     "antd": "^3.23.5",
-    "react": "^16.10.1",
-    "react-dom": "^16.10.1",
-    "react-scripts": "3.1.2",
     "cheerio": "^1.0.0-rc.3",
     "colors": "^1.4.0",
-    "mkdirp": "^0.5.1"
+    "mkdirp": "^0.5.1",
+    "react": "^16.10.1",
+    "react-dom": "^16.10.1",
+    "react-scripts": "3.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && mv build docs",
+    "build": "react-scripts build",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "r": "node --experimental-modules ./node/index",
@@ -21,6 +23,7 @@
     "pub": "yarn r && yarn dc && yarn build && git add -A && git commit -m\"publish\" && git push",
     "pub github": "yarn r && yarn dc && yarn build && git add -A && git commit -m\"publish\" && git push -u github master"
   },
+  "homepage": "https://gaohaoyang.github.io/BMW2SeriesConvertible",
   "eslintConfig": {
     "extends": "react-app"
   },
@@ -35,5 +38,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^2.1.1"
   }
 }
