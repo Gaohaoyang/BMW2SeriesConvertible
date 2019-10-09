@@ -1,26 +1,30 @@
 import React from 'react'
-import { Table, Button, Checkbox } from 'antd'
+import { Table, Button, Checkbox, Drawer } from 'antd'
 
 import carsData from './cars.json'
 import './App.css'
 
 class App extends React.Component {
   state = {
-    filteredInfo: null,
-    sortedInfo: null,
+    filteredInfo: {
+      soldOut: ['false']
+    },
+    // sortedInfo: null,
+    drawerVisible: false,
+    drawerGallery: [],
   }
 
-  // handleChange = (pagination, filters, sorter) => {
-  //   console.log('Various parameters', pagination, filters, sorter)
-  //   this.setState({
-  //     filteredInfo: filters,
-  //     sortedInfo: sorter,
-  //   })
-  // }
+  handleChange = (pagination, filters, sorter) => {
+    console.log('Various parameters', pagination, filters, sorter)
+    this.setState({
+      filteredInfo: filters,
+      sortedInfo: sorter,
+    })
+  }
 
-  // clearFilters = () => {
-  //   this.setState({ filteredInfo: null })
-  // }
+  clearFilters = () => {
+    this.setState({ filteredInfo: null })
+  }
 
   // clearAll = () => {
   //   this.setState({
@@ -29,19 +33,46 @@ class App extends React.Component {
   //   })
   // }
 
-  setPriceSort = () => {
+  // setPriceSort = () => {
+  //   this.setState({
+  //     sortedInfo: {
+  //       order: 'descend',
+  //       columnKey: 'price',
+  //     },
+  //   })
+  // }
+
+  /**
+   * 过滤是否已售出
+   */
+  filterSoldOutCheckBox = (e) => {
+    console.log(`checked = ${e.target.checked}`)
+    if (e.target.checked) {
+      this.setState({
+        filteredInfo: {
+          soldOut: ['true'],
+        },
+      })
+    } else {
+      this.setState({
+        filteredInfo: {
+          soldOut: ['false'],
+        },
+      })
+    }
+  }
+
+  onCloseDrawer = () => {
     this.setState({
-      sortedInfo: {
-        order: 'descend',
-        columnKey: 'price',
-      },
+      drawerVisible: false
     })
   }
 
   render() {
-    // let { sortedInfo, filteredInfo } = this.state
+    let { filteredInfo, drawerVisible, drawerGallery } = this.state
+    const me = this
     // sortedInfo = sortedInfo || {}
-    // filteredInfo = filteredInfo || {}
+    filteredInfo = filteredInfo || {}
     const columns = [
       {
         title: 'id',
@@ -67,7 +98,11 @@ class App extends React.Component {
         dataIndex: 'link',
         key: 'link',
         render(link) {
-          return <a href={link}>link</a>
+          return (
+            <a target='_blank' rel='noopener noreferrer' href={link}>
+              link
+            </a>
+          )
         },
       },
       {
@@ -76,7 +111,7 @@ class App extends React.Component {
         key: 'price',
         sorter: (a, b) => a.price - b.price,
         render(price) {
-          return <span>{price / 10000}w</span>
+          return <span>{+(price / 10000).toFixed(2)}w</span>
         },
       },
       {
@@ -85,14 +120,14 @@ class App extends React.Component {
         key: 'priceNewCar',
         sorter: (a, b) => a.priceNewCar - b.priceNewCar,
         render(priceNewCar) {
-          return <span>{priceNewCar / 10000}w</span>
+          return <span>{+(priceNewCar / 10000).toFixed(2)}w</span>
         },
       },
       {
         title: '图片',
         dataIndex: 'img',
         key: 'img',
-        render(img) {
+        render(img, record) {
           return (
             <img
               style={{
@@ -101,7 +136,13 @@ class App extends React.Component {
               }}
               src={img}
               alt=''
-              onClick={() => {}}
+              onClick={() => {
+                console.log(record.gallery)
+                me.setState({
+                  drawerVisible: true,
+                  drawerGallery: record.gallery
+                })
+              }}
             />
           )
         },
@@ -124,7 +165,7 @@ class App extends React.Component {
           },
         ],
         onFilter: (value, record) => record.soldOut.toString().includes(value),
-        // filteredValue: filteredInfo.name || null,
+        filteredValue: filteredInfo.soldOut || null,
       },
       // {
       //   title: 'birth',
@@ -235,13 +276,17 @@ class App extends React.Component {
         },
       },
     ]
+
     return (
       <div>
         <div className='table-operations'>
-          <Checkbox onChange={this.filterSoldOut}>仅显示在售</Checkbox>
-          <Button onClick={this.setPriceSort}>价格排序</Button>
+          <Checkbox
+            onChange={this.filterSoldOutCheckBox}
+            checked={this.state.filteredInfo && this.state.filteredInfo.soldOut[0] === 'false'}
+          >仅显示在售</Checkbox>
+          {/* <Button onClick={this.setPriceSort}>价格排序</Button> */}
           <Button onClick={this.clearFilters}>Clear filters</Button>
-          <Button onClick={this.clearAll}>Clear filters and sorters</Button>
+          {/* <Button onClick={this.clearAll}>Clear filters and sorters</Button> */}
         </div>
         <Table
           columns={columns}
@@ -249,8 +294,33 @@ class App extends React.Component {
           size='small'
           bordered
           pagination={false}
-          // scroll={{ y: 650 }}
+          onChange={this.handleChange}
+        // scroll={{ y: 650 }}
         />
+        <Drawer
+          title='图集'
+          placement='right'
+          closable={false}
+          onClose={this.onCloseDrawer}
+          visible={drawerVisible}
+          width={848}
+          maskStyle={{
+            backdropFilter: 'blur(5px)'
+          }}
+          destroyOnClose={true}
+        >
+          {
+            drawerGallery.map((item, index) => <img
+              key={`imgGallery_${index}`}
+              src={item}
+              alt="gallery"
+              style={{
+                width: '800px',
+                marginBottom: index === drawerGallery.length - 1 ? '0px' : '24px'
+              }}
+            />)
+          }
+        </Drawer>
       </div>
     )
   }
