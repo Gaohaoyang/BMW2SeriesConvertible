@@ -48,6 +48,12 @@ const compareAndAppend = async (carsArrNew) =>
           carsArrOld.forEach((carOld) => {
             if (carNew.carInfoId === carOld.carInfoId) {
               includeFlag = true
+              if (carNew.soldOut !== carOld.soldOut) {
+                carOld.soldOut = carNew.soldOut
+              }
+              if (carNew.viewHeat !== carOld.viewHeat) {
+                carOld.viewHeat = carNew.viewHeat
+              }
             }
           })
           if (!includeFlag) {
