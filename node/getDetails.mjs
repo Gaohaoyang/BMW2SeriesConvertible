@@ -54,6 +54,9 @@ const compareAndAppend = async (carsArrNew) =>
               if (carNew.viewHeat !== carOld.viewHeat) {
                 carOld.viewHeat = carNew.viewHeat
               }
+              if (carNew.price !== carOld.price) {
+                carOld.price = carNew.price
+              }
             }
           })
           if (!includeFlag) {
