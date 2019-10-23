@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "56b33b248d7b278e243c12423c799ce7",
+    "revision": "d2160f3a7f1c40a96a06b78a6cd7f787",
     "url": "/BMW2SeriesConvertible/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/BMW2SeriesConvertible/static/css/2.653462cc.chunk.css"
   },
   {
-    "revision": "fc4b6a5c207632df97b7",
+    "revision": "62a693da5fefc1776ae7",
     "url": "/BMW2SeriesConvertible/static/css/main.bf2c2525.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/BMW2SeriesConvertible/static/js/2.703245e9.chunk.js"
   },
   {
-    "revision": "fc4b6a5c207632df97b7",
-    "url": "/BMW2SeriesConvertible/static/js/main.197555ba.chunk.js"
+    "revision": "62a693da5fefc1776ae7",
+    "url": "/BMW2SeriesConvertible/static/js/main.da5220fe.chunk.js"
   },
   {
     "revision": "2e429d63cd41dcca30c0",
