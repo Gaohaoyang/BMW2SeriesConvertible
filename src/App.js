@@ -212,6 +212,16 @@ class App extends React.Component {
         title: '地区',
         dataIndex: 'location',
         key: 'location',
+        filters: [
+          {
+            text: '已售出',
+            value: 'true',
+          },
+          {
+            text: '未售出',
+            value: 'false',
+          },
+        ],
       },
       {
         title: '销售厂商',
