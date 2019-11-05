@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/BMW2SeriesConvertible/precache-manifest.c32983c45099d45b33a3b87b983c4d5a.js"
+  "/BMW2SeriesConvertible/precache-manifest.9dc0add0b434cd51f5dddce8fd84115f.js"
 );
 
 self.addEventListener('message', (event) => {
