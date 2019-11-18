@@ -20,6 +20,7 @@
     "eject": "react-scripts eject",
     "r": "node --experimental-modules ./node/index",
     "dc": "node --experimental-modules ./node/dataCorrection",
+    "u": "yarn r && yarn dc && git add -A && git commit -m\"update data\"",
     "pub": "yarn r && yarn dc && git add -A && git commit -m\"update data\" && git push && yarn run deploy"
   },
   "homepage": "https://gaohaoyang.github.io/BMW2SeriesConvertible",
